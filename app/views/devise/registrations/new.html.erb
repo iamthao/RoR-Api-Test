@@ -1,0 +1,33 @@
+<image src="/images/logo.png" style="height: 120px;display: block;  margin-left: auto ; margin-right: auto;"/>
+
+<div class="container" style="text-align: center;padding-bottom: 0;">
+  <h1>Đấu Trường Tiếng Anh</h1>
+  <hr/>
+</div>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+  <div class="container" id="login">
+    <label><b>Email</b></label>
+    <input type="text" name="user[email]" id="user_email"  placeholder="Email" autofocus="autofocus">
+
+    <p></p>
+    <label><b>Mật khẩu</b></label>
+    <input  autocomplete="off" type="password" name="user[password]" id="user_password" placeholder="Mật khẩu" >
+
+    <p></p>
+    <label><b>Nhập lại mật khẩu</b></label>
+    <input autocomplete="off" type="password" name="user[password_confirmation]" id="user_password_confirmation" placeholder="Nhập lại mật khẩu">
+    <p>Bằng cách tạo một tài khoản bạn đồng ý với <a href="#">Điều khoản & Bảo mật</a> của chúng tôi.</p>
+
+    <p></p>
+    <div class="clearfix">
+      <button type="submit" class="signupbtn">Đăng ký</button>
+    </div>
+
+    <p></p>
+    Đã có tài khoản? <%= link_to "Đăng nhập.", new_session_path(resource_name) %><br />
+  </div>
+<% end %>
+
+

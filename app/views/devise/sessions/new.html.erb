@@ -1,0 +1,37 @@
+<image src="/images/logo.png" style="height: 120px;display: block;  margin-left: auto ; margin-right: auto;"/>
+
+<div class="container" style="text-align: center;padding-bottom: 0;">
+  <h1>Đấu Trường Tiếng Anh</h1>
+  <hr/>
+  <a class="btn loginBtn loginBtn--facebook" href="/users/auth/facebook">Sign in with Facebook</a>
+  <a class="btn loginBtn loginBtn--google" href="/users/auth/google_oauth2">Sign in with Google</a>
+  <p></p>
+  <h3>Or</h3>
+</div>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="container" id="login">
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>"><%= value %></div>
+      <p></p>
+    <% end %>
+
+    <label><b>Email</b></label>
+    <input type="text" name="user[email]" id="user_email" placeholder="Email" autofocus="autofocus">
+    <p></p>
+
+    <label><b>Mật khẩu</b></label>
+    <input autocomplete="off" type="password" name="user[password]" id="user_password" placeholder="Mật khẩu">
+    <p></p>
+
+    <div class="clearfix">
+      <button type="submit" class="signupbtn">Đăng nhập</button>
+    </div>
+
+    <p></p>
+    <%= link_to "Quên mật khẩu?", new_password_path(resource_name) %><br />
+    <p></p>
+    Cần một tài khoản? <%= link_to "Đăng ký.", new_registration_path(resource_name) %><br />
+  </div>
+<% end %>
+
