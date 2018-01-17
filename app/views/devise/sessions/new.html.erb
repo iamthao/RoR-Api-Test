@@ -1,7 +1,6 @@
-<image src="/images/logo.png" style="height: 120px;display: block;  margin-left: auto ; margin-right: auto;"/>
-
 <div class="container" style="text-align: center;padding-bottom: 0;">
-  <h1>Đấu Trường Tiếng Anh</h1>
+  <image src="/images/logo.png" style="height: 100px;display: block;  margin-left: auto ; margin-right: auto;"/>
+  <h2>Đấu Trường Tiếng Anh</h2>
   <hr/>
   <a class="btn loginBtn loginBtn--facebook" href="/users/auth/facebook">Sign in with Facebook</a>
   <a class="btn loginBtn loginBtn--google" href="/users/auth/google_oauth2">Sign in with Google</a>
@@ -12,20 +11,28 @@
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="container" id="login">
     <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>"><%= value %></div>
+      <div class="alert alert-<%= key == 'notice' ? 'success' : (key == 'alert' ? 'danger': key )%> alert-dismissable" style="border-radius: 0">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <%= value %></div>
       <p></p>
     <% end %>
 
-    <label><b>Email</b></label>
-    <input type="text" name="user[email]" id="user_email" placeholder="Email" autofocus="autofocus">
-    <p></p>
+    <div class="form-group">
+      <label for="user_email"><b>Email <span style="color: red">*</span></b></label>
+      <div class="high-light">
+        <input class="form-control-error" type="text" name="user[email]" id="user_email" autofocus="autofocus">
+      </div>
+    </div>
 
-    <label><b>Mật khẩu</b></label>
-    <input autocomplete="off" type="password" name="user[password]" id="user_password" placeholder="Mật khẩu">
-    <p></p>
+    <div class="form-group">
+      <label for="user_password"><b>Mật khẩu <span style="color: red">*</span></b></label>
+      <div class="high-light">
+        <input class="form-control-error" autocomplete="off" type="password" name="user[password]" id="user_password">
+      </div>
+    </div>
 
     <div class="clearfix">
-      <button type="submit" class="signupbtn">Đăng nhập</button>
+      <button type="submit" class="sign-in-btn">Đăng nhập</button>
     </div>
 
     <p></p>
@@ -34,4 +41,59 @@
     Cần một tài khoản? <%= link_to "Đăng ký.", new_registration_path(resource_name) %><br />
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+      $("#new_user").validate({
+      //error place
+      //  errorPlacement: function (error, element) {
+      //    error.insertBefore(element);
+      //  },
+      //adding rule
+        rules: {
+          // email is required with format
+          "user[email]": {
+            required: true,
+            maxlength: 150,
+            email: true
+          },
+          // password is required
+          "user[password]": {
+            required: true,
+            maxlength: 50,
+            minlength: 6
+          }
+        },
+        // error messages
+        messages: {
+          "user[email]":{
+            required: "Email không được để trống.",
+            email: "Email không hợp lệ."
+          },
+          "user[password]": {
+            required: "Mật khẩu không được để trống.",
+            maxlength: "Mật khẩu tối đa 50 ký tự.",
+            minlength: "Mật khẩu tối thiểu 6 ký tự."
+          }
+        },
+        errorElement: "em",
+        errorPlacement: function ( error, element ) {
+          // Add the `help-block` class to the error element
+          error.addClass( "help-block" );
+
+          if ( element.prop( "type" ) === "checkbox" ) {
+            error.insertAfter( element.parent( "label" ) );
+          } else {
+            error.insertAfter( element );
+          }
+        },
+        highlight: function ( element, errorClass, validClass ) {
+          $( element ).parents( ".high-light" ).addClass( "has-error" ).removeClass( "has-success" );
+        },
+        unhighlight: function (element, errorClass, validClass) {
+          $( element ).parents( ".high-light" ).addClass( "has-success" ).removeClass( "has-error" );
+        }
+    });
+  });
+</script>
 
