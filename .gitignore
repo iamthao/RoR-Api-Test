@@ -27,8 +27,6 @@
 
 /config/application.yml
 /config/database.yml
-/Gemfile.lock
-/package-lock.json
 
 /.vscode
 /.vscode/*
