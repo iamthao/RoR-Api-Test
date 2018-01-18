@@ -29,3 +29,10 @@
 /config/database.yml
 /Gemfile.lock
 /package-lock.json
+
+/.vscode
+/.vscode/*
+.vscode
+.vscode/*
+
+
