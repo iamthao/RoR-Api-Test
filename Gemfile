@@ -27,3 +27,5 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen'
 end
+
+gem 'mini_racer', platforms: :ruby
