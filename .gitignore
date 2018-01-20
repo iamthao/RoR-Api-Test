@@ -33,7 +33,4 @@
 .vscode
 .vscode/*
 
-/yarn.lock
-yarn.lock
-
 
