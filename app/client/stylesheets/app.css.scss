@@ -1,0 +1,35 @@
+@import "~video-react/styles/scss/video-react";
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.iframe-response {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+}
+
+.iframe-response iframe, .iframe-response object, .iframe-response embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.list-movie-title{
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: #fff;
+  background-color: #428bca;
+  border-color: #428bca;
+}
+
+.border-radius-none{
+  border-radius: 0 !important;
+}
