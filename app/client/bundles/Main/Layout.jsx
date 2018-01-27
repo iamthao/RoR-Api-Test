@@ -1,9 +1,12 @@
 import "regenerator-runtime/runtime";
 import 'jquery/src/jquery';
+import 'bootstrap/dist/js/bootstrap.min';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
 
+import '../../css/layout.css.scss';
+import '../../css/app.css.scss';
 
 import React from 'react';
 import { Provider } from 'react-redux';

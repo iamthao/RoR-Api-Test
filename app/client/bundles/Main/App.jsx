@@ -1,9 +1,11 @@
-
-
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import NavbarInstance from '../Main/components/NavBars/Navbar';
+import Header from '../Main/components/NavBars/Header';
+import SideBar from '../Main/components/NavBars/SideBar';
+import Content from '../Main/components/NavBars/Content';
+
 
 const NotFound = () => <h2>404 Not Found React</h2>
 const AboutView = () => <h2>AboutView</h2>
@@ -18,19 +20,18 @@ class App extends React.Component {
         this.state = {
         };
     }
+    componentDidMount() {
+
+    }
 
     render() {
         return (
             <div style={{ width: '100%', margin: '0', padding: '0' }}>
                 <BrowserRouter>
-                    <div style={{ width: '100%', margin: '0', padding: '0' }}>
-                        <NavbarInstance />
-                        <div style={{height:'58px'}}></div>
-                        <Switch>
-                            <Route exact path="/react" component={Index} />
-                            <Route exact path="/react/about" component={AboutView} />
-                            <Route component={NotFound} />
-                        </Switch>
+                    <div>
+                        <Header />
+                        <SideBar />
+                        <Content />
                     </div>
                 </BrowserRouter>
             </div>
