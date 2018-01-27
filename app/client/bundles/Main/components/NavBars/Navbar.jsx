@@ -39,7 +39,7 @@ class Navbar extends React.Component {
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul className="nav navbar-nav">
                                 <li>
-                                    <Link to='/'><i className="fa fa-eye"></i>&nbsp; Tổng quan</Link>
+                                    <Link to='/'><i className="fa fa-dashboard"></i>&nbsp; Tổng quan</Link>
                                 </li>
                                 <li className="dropdown">
                                     <Link to="#" className="username dropdown-toggle" data-toggle="dropdown" role="button"

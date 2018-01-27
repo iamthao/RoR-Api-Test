@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 export default class SideBar extends Component {
@@ -10,9 +10,15 @@ export default class SideBar extends Component {
         this.state = {
             pathname: ''
         };
+        this.handleCheck = this.handleCheck.bind(this);
     }
 
-    render(){
+    handleCheck(arr) {
+        console.log("path", window.location.pathname)
+        return $.inArray(window.location.pathname, arr) != -1
+    }
+
+    render() {
         return (
             <aside className="main-sidebar">
                 <section className="sidebar">
@@ -27,70 +33,28 @@ export default class SideBar extends Component {
                     </div>
                     <ul className="sidebar-menu" data-widget="tree">
                         <li className="header">MAIN NAVIGATION</li>
-                        <li className="treeview">
+                        <li className={this.handleCheck(['/','']) ? 'active menu-open' : ''}>
+                            <Link to='/'><i className="fa fa-dashboard"></i>
+                                <span>Dashboard</span>
+                            </Link>
+                        </li>
+                        <li  className={this.handleCheck(['/charts/chartjs','/charts/morris']) ?
+                        'treeview active menu-open' : 'treeview'}>
                             <a href="#">
-                                <i className="fa fa-files-o"></i>
-                                <span>Layout Options</span>
+                                <i className="fa fa-pie-chart"></i>
+                                <span>TEst</span>
                                 <span className="pull-right-container">
-                                <span className="label label-primary pull-right">4</span>
+                                    <i className="fa fa-angle-left pull-right"></i>
                                 </span>
                             </a>
                             <ul className="treeview-menu">
-                                <li><a href="pages/layout/top-nav.html"><i className="fa fa-circle-o"></i> Top Navigation</a></li>
-                                <li><a href="pages/layout/boxed.html"><i className="fa fa-circle-o"></i> Boxed</a></li>
-                                <li><a href="pages/layout/fixed.html"><i className="fa fa-circle-o"></i> Fixed</a></li>
-                                <li><a href="pages/layout/collapsed-sidebar.html"><i className="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+                                <li className={this.handleCheck(['/charts/chartjs']) ? 'active' : ''}>
+                                    <Link to='/charts/chartjs'><i className="fa fa-circle-o"></i> ChartJS</Link>
+                                </li>
+                                <li className={this.handleCheck(['/charts/morris']) ? 'active' : ''}>
+                                    <Link to='/charts/morris'><i className="fa fa-circle-o"></i> Morris</Link>
+                                </li>
                             </ul>
-                        </li>
-                        <li>
-                        <a href="pages/widgets.html">
-                            <i className="fa fa-th"></i> <span>Widgets</span>
-                            <span className="pull-right-container">
-                            <small className="label pull-right bg-green">new</small>
-                            </span>
-                        </a>
-                        </li>
-                        <li className="treeview">
-                        <a href="#">
-                            <i className="fa fa-pie-chart"></i>
-                            <span>Charts</span>
-                            <span className="pull-right-container">
-                            <i className="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul className="treeview-menu">
-                            <li className={window.location.pathname== '/charts/chartjs' ? 'active' : 'test'}>
-                                <Link to='/charts/chartjs'><i className="fa fa-circle-o"></i> ChartJS</Link>
-                            </li>
-                            <li className={window.location.pathname == '/charts/morris' ? 'active' : 'test'}>
-                                <Link to='/charts/morris'><i className="fa fa-circle-o"></i> Morris</Link>
-                            </li>
-                        </ul>
-                        </li>
-                        <li>
-                        <ul className="treeview-menu">
-                            <li><a href="pages/tables/simple.html"><i className="fa fa-circle-o"></i> Simple tables</a></li>
-                            <li><a href="pages/tables/data.html"><i className="fa fa-circle-o"></i> Data tables</a></li>
-                        </ul>
-                        </li>
-                        <li>
-                        <a href="pages/calendar.html">
-                            <i className="fa fa-calendar"></i> <span>Calendar</span>
-                            <span className="pull-right-container">
-                            <small className="label pull-right bg-red">3</small>
-                            <small className="label pull-right bg-blue">17</small>
-                            </span>
-                        </a>
-                        </li>
-                        <li>
-                        <a href="pages/mailbox/mailbox.html">
-                            <i className="fa fa-envelope"></i> <span>Mailbox</span>
-                            <span className="pull-right-container">
-                            <small className="label pull-right bg-yellow">12</small>
-                            <small className="label pull-right bg-green">16</small>
-                            <small className="label pull-right bg-red">5</small>
-                            </span>
-                        </a>
                         </li>
                     </ul>
                 </section>
