@@ -56,6 +56,13 @@ const Index3 = () => <section className="content-header">
                         </div>
                     </div>
                 </section>
+const Index4 = () => <section className="content-header">
+                    <div className="row">
+                        <div className="col-md-12">
+                            Index 4
+                        </div>
+                    </div>
+                </section>
 const NotFound = () => <h2>404 Not Found React</h2>
 
 export default class Content extends Component {
@@ -64,8 +71,9 @@ export default class Content extends Component {
             <div className="content-wrapper">
                 <Switch>
                     <Route exact path="/" component={Index} />
-                    <Route exact path="/charts/chartjs" component={Index2} />
-                    <Route exact path="/charts/morris" component={Index3} />
+                    <Route exact path="/hanghoa/danhmuc" component={Index2} />
+                    <Route exact path="/hanghoa/gia" component={Index3} />
+                    <Route exact path="/hanghoa/kiemkho" component={Index4} />
                     <Route component={NotFound} />
                 </Switch>
 
