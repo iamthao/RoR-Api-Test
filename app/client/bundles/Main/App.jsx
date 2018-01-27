@@ -5,6 +5,7 @@ import NavbarInstance from '../Main/components/NavBars/Navbar';
 import Header from '../Main/components/NavBars/Header';
 import SideBar from '../Main/components/NavBars/SideBar';
 import Content from '../Main/components/NavBars/Content';
+import Footer from '../Main/components/NavBars/Footer';
 
 
 const NotFound = () => <h2>404 Not Found React</h2>
@@ -32,6 +33,7 @@ class App extends React.Component {
                         <Header />
                         <SideBar />
                         <Content />
+                        <Footer/>
                     </div>
                 </BrowserRouter>
             </div>
