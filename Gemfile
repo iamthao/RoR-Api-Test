@@ -15,6 +15,9 @@ gem 'webpacker'
 gem 'faraday'
 gem 'json'
 
+gem 'devise'
+gem 'activeadmin'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara'

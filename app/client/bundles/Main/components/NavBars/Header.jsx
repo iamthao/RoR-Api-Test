@@ -53,7 +53,7 @@ export default class Header extends Component {
                   <a href="#" className="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div className="pull-right">
-                  <a href="#" className="btn btn-default btn-flat">Sign out</a>
+                  <a rel="nofollow" className="btn btn-default btn-flat"  href="/users/sign_out">Sign out</a>
                 </div>
               </li>
             </ul>
