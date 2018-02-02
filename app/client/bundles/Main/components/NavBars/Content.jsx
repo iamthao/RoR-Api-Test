@@ -5,6 +5,8 @@ import DashboardView from '../Dashboard/DashboardView';
 
 const NotFound = () => <h2>404 Not Found React</h2>
 
+
+
 export default class Content extends Component {
     render(){
         return (
