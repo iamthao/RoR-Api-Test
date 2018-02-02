@@ -6,9 +6,9 @@ export default class Header extends Component {
             <header className="main-header">
     <a href="index2.html" className="logo">
 
-      <span className="logo-mini"><b>A</b>LT</span>
+      <span className="logo-mini"><b>MS</b></span>
 
-      <span className="logo-lg"><b>Admin</b>LTE</span>
+      <span className="logo-lg"><b>Master Seller</b></span>
     </a>
 
     <nav className="navbar navbar-static-top">
