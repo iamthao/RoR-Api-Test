@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import DashboardView from '../Dashboard/DashboardView';
+
 const NotFound = () => <h2>404 Not Found React</h2>
 
 export default class Content extends Component {
