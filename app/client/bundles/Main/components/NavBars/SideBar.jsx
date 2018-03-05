@@ -51,7 +51,7 @@ export default class SideBar extends Component {
                                     <Link to='/hanghoa/danhmuc'><i className="fa fa-th"></i> Danh mục</Link>
                                 </li>
                                 <li className={window.location.pathname == '/hanghoa/gia' ? 'active' : ''}>
-                                    <Link to='/hanghoa/gia'><i className="fa fa-tags"></i> Thiết lập gía</Link>
+                                    <Link to='/hanghoa/gia'><i className="fa fa-tags"></i> Thiết lập giá</Link>
                                 </li>
                                 <li className={window.location.pathname == '/hanghoa/kiemkho' ? 'active' : ''}>
                                     <Link to='/hanghoa/kiemkho'><i className="fa fa-check-square-o"></i> Kiểm kho</Link>

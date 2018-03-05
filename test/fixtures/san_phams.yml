@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  masp: MyString
+  tensp: MyString
+  giaban: 1
+  giavon: 1
+  tonkho: 1
+
+two:
+  masp: MyString
+  tensp: MyString
+  giaban: 1
+  giavon: 1
+  tonkho: 1
