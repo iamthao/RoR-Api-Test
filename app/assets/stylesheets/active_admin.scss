@@ -10,8 +10,23 @@
 // Active Admin's got SASS!
 @import "active_admin/mixins";
 @import "active_admin/base";
+@import "bootstrap-sprockets";
+@import "bootstrap";
 
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+#filters_sidebar_section h3{
+  margin-bottom: 0;
+}
+
+.filter_form label.label{
+  text-align: left;
+}
+
+div.panel_contents{
+  border : 1px solid #F4F4F4;
+  background: #F4F4F4
+}

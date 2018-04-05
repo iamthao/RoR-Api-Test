@@ -1,5 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {
+    callGetListSP,
+    callAddNewSP,
+    callSPPaging
+} from '../../actions/HangHoa/hangHoaActions';
+import ReactPaginate from 'react-paginate';
 
 class SanPham extends React.Component {
   static propTypes = {};
@@ -8,25 +14,93 @@ class SanPham extends React.Component {
     super(props);
     this.state = {
       col: 'mahh',
-      asc: true
+      asc: true,
+      error_masp: false,
+      error_masp_msg :'',
+      image: ''
     };
     this.sortHandleClick = this.sortHandleClick.bind(this)
+
+    this.openModalClick = this.openModalClick.bind(this)
+    this.closeModelClick = this.closeModelClick.bind(this)
+    this.addNewClick = this.addNewClick.bind(this)
+
+    this.handlePageChange = this.handlePageChange.bind(this)
+    this.onImageChange = this.onImageChange.bind(this)
   }
 
   componentDidMount() {
-    //this.props.dispatch(fetchNewMovie(this.props.match.params.id));
+    this.props.dispatch(callGetListSP());
   };
 
   sortHandleClick(col) {
-    console.log('vo click')
     this.setState({
       asc: this.state.col != col ? true : !this.state.asc,
       col: col
     });
   };
 
+  closeModelClick(){
+    $('#addNewModal').modal('hide');
+  }
+
+  openModalClick(){
+    $('#masp').val('');
+    $('#tensp').val('');
+    $('#giaban').val('');
+    $('#giavon').val('');
+    $('#tonkho').val('');
+
+    this.setState({
+      error_masp: false,
+      error_masp_msg :'',
+      image: ''
+    });
+
+    $('#addNewModal').modal('show');
+  }
+
+  addNewClick(){
+    let isError = false;
+    if ($('#masp').val().trim() === ''){
+      this.setState({
+        error_masp: true,
+        error_masp_msg: 'Mã SP không được trống'
+      });
+      isError = true;
+    }
+
+    if(isError){
+      return;
+    }
+    else
+    {
+      this.props.dispatch(callAddNewSP($('#masp').val(), $('#tensp').val(), $('#giaban').val(), $('#giavon').val(), $('#tonkho').val() ));
+      $('#addNewModal').modal('hide');
+    }
+
+  }
+
+  handlePageChange(page){
+     this.props.dispatch(callSPPaging(page.selected +1))
+  }
+
+  onImageChange(event){
+    console.log('vo 1',event.target.files )
+    if (event.target.files && event.target.files[0]) {
+        console.log('vo')
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                console.log('e.target.result', e.target.result)
+                this.setState({image: e.target.result});
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            //console.log('reader.readAsDataURL(event.target.files[0])', reader.readAsDataURL(event.target.files[0]))
+        }
+  }
   render() {
     console.log(this.state)
+    let props = this.props.hangHoaReducer;
     let iconMahh = null;
     if (this.state.col == 'mahh' && this.state.asc == true) {
       iconMahh = <i className='fa fa-caret-up'></i>
@@ -99,8 +173,8 @@ class SanPham extends React.Component {
                   <div id="example1_wrapper" className="dataTables_wrapper form-inline dt-bootstrap">
                     <div className="row">
                       <div className="col-sm-12" style={{ marginBottom: '10px' }}>
-                        <button className="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal"><i className="fa fa-plus"></i> Thêm mới</button>
-                        <div className="modal fade in" id="exampleModal" style={{paddingRight: '15px'}} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <button className="btn btn-sm btn-primary" onClick={() => this.openModalClick()}><i className="fa fa-plus"></i> Thêm mới</button>
+                        <div className="modal  fade in" id="addNewModal" style={{paddingRight: '15px'}} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div className="modal-dialog">
                             <div className="modal-content">
                               <div className="modal-header">
@@ -111,29 +185,73 @@ class SanPham extends React.Component {
                               <div className="modal-body">
                                 <div className="row">
                                   <div className="col-sm-12" style={{marginBottom: '5px'}}>
-                                    <b>UserName</b>
+                                    <b>Mã SP: <span style={{color: 'red'}}>*</span></b>
                                   </div>
                                   <div className="col-sm-12">
-                                    <input style={{width: '100%'}} type="password" class="form-control" id="inputPassword3"/>
+                                    <input style={{width: '100%'}} type="text" className="form-control" id="masp"/>
+                                  </div>
+                                  {this.state.error_masp ?
+                                    <div className="col-sm-12" style={{marginBottom: '5px'}}>
+                                      <span style={{color: 'red'}}>{this.state.error_masp_msg}</span>
+                                    </div> : ''}
+                                </div>
+                                <div className="row" style={{marginTop: '15px'}}>
+                                  <div className="col-sm-12" style={{marginBottom: '5px'}}>
+                                    <b>Tên SP: <span style={{color: 'red'}}>*</span></b>
+                                  </div>
+                                  <div className="col-sm-12">
+                                    <input style={{width: '100%'}} type="text" className="form-control" id="tensp"/>
                                   </div>
                                 </div>
-                                 <div className="row" style={{marginTop: '15px'}}>
+                                <div className="row" style={{marginTop: '15px'}}>
                                   <div className="col-sm-12" style={{marginBottom: '5px'}}>
-                                    <b>Password</b>
+                                    <b>Giá bán: <span style={{color: 'red'}}>*</span></b>
                                   </div>
                                   <div className="col-sm-12">
-                                    <input style={{width: '100%'}} type="password" class="form-control" id="inputPassword3"/>
+                                    <input style={{width: '100%'}} type="text" className="form-control" id="giaban"/>
+                                  </div>
+                                </div>
+                                <div className="row" style={{marginTop: '15px'}}>
+                                  <div className="col-sm-12" style={{marginBottom: '5px'}}>
+                                    <b>Giá vốn: <span style={{color: 'red'}}>*</span></b>
+                                  </div>
+                                  <div className="col-sm-12">
+                                    <input style={{width: '100%'}} type="text" className="form-control" id="giavon"/>
+                                  </div>
+                                </div>
+                                <div className="row" style={{marginTop: '15px'}}>
+                                  <div className="col-sm-12" style={{marginBottom: '5px'}}>
+                                    <b>Tồn kho: <span style={{color: 'red'}}>*</span></b>
+                                  </div>
+                                  <div className="col-sm-12">
+                                    <input style={{width: '100%'}} type="text" className="form-control" id="tonkho"/>
+                                  </div>
+                                </div>
+                                <div className="row" style={{marginTop: '15px'}}>
+                                  <div className="col-sm-12" style={{marginBottom: '5px'}}>
+                                    <input multiple type="file" onChange={(event) =>this.onImageChange(event)} className="filetype" id="group_image"/>
+                                  </div>
+                                  <div className="col-sm-12">
+                                    <img id="target" height='150px' src={this.state.image}/>
                                   </div>
                                 </div>
                               </div>
                               <div className="modal-footer">
-                                <button type="button" className="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary">Save changes</button>
+                                <div className="row">
+                                  <div className="col-sm-6 col-xs-12">
+                                     <span className="pull-left">(<span style={{color: 'red'}}>*</span>) : Không được trống </span>
+                                  </div>
+                                  <div className="col-sm-6 col-xs-12" style={{textAlign: 'right'}}>
+                                     <button type="button" className="btn btn-default" onClick={() => this.closeModelClick()}><i className="fa fa-times"></i> Đóng</button>
+                                    <button type="button" className="btn btn-primary" onClick={() => this.addNewClick()}><i className="fa fa-save"></i> Lưu</button>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
+
                       <div className="col-sm-12">
                         <table id="example1" className="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                           <thead>
@@ -158,56 +276,33 @@ class SanPham extends React.Component {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr role="row" className="odd">
-                              <td className="sorting_1">Gecko</td>
-                              <td>Firefox 1.0</td>
-                              <td>Win 98+ / OSX.2+</td>
-                              <td>1.7</td>
-                              <td>A</td>
-                              <td>Edit Delete</td>
-                            </tr>
-                            <tr role="row" className="even">
-                              <td className="sorting_1">Gecko</td>
-                              <td>Firefox 1.5</td>
-                              <td>Win 98+ / OSX.2+</td>
-                              <td>1.8</td>
-                              <td>A</td>
-                              <td>Edit Delete</td>
-                            </tr>
+                            {props.data.map((value, index) =>
+                              <tr role="row" className={index % 2 == 0 ? "odd" : "even"} key ={index}>
+                                <td>{value.masp}</td>
+                                <td>{value.tensp}</td>
+                                <td>{value.giaban}</td>
+                                <td>{value.giavon}</td>
+                                <td>{value.tonkho}</td>
+                                <td>Edit Delete</td>
+                              </tr>
+                            )}
                           </tbody>
                         </table>
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-sm-12">
-                        <div className="dataTables_paginate paging_simple_numbers text-align-center" id="example1_paginate">
-                          <ul className="pagination">
-                            <li className="paginate_button previous disabled" id="example1_previous">
-                              <a href="#" aria-controls="example1" data-dt-idx="0" tabIndex="0">Previous</a>
-                            </li>
-                            <li className="paginate_button active">
-                              <a href="#" aria-controls="example1" data-dt-idx="1" tabIndex="0">1</a>
-                            </li>
-                            <li className="paginate_button ">
-                              <a href="#" aria-controls="example1" data-dt-idx="2" tabIndex="0">2</a>
-                            </li>
-                            <li className="paginate_button ">
-                              <a href="#" aria-controls="example1" data-dt-idx="3" tabIndex="0">3</a>
-                            </li>
-                            <li className="paginate_button ">
-                              <a href="#" aria-controls="example1" data-dt-idx="4" tabIndex="0">4</a>
-                            </li>
-                            <li className="paginate_button ">
-                              <a href="#" aria-controls="example1" data-dt-idx="5" tabIndex="0">5</a>
-                            </li>
-                            <li className="paginate_button ">
-                              <a href="#" aria-controls="example1" data-dt-idx="6" tabIndex="0">6</a>
-                            </li>
-                            <li className="paginate_button next" id="example1_next">
-                              <a href="#" aria-controls="example1" data-dt-idx="7" tabIndex="0">Next</a>
-                            </li>
-                          </ul>
-                        </div>
+                      <div className="col-sm-12" style={{textAlign:'center'}}>
+                        <ReactPaginate previousLabel={"Previous"}
+                       nextLabel={"Next"}
+                       breakLabel={<a href="#">...</a>}
+                       breakClassName={"break-me"}
+                       pageCount={props.total_page}
+                       marginPagesDisplayed={2}
+                       pageRangeDisplayed={5}
+                       onPageChange={this.handlePageChange}
+                       containerClassName={"pagination"}
+                       subContainerClassName={"pages pagination"}
+                       activeClassName={"active"} />
                       </div>
                     </div>
                   </div>

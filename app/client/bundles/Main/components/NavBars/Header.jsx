@@ -22,7 +22,7 @@ export default class Header extends Component {
           <li className="dropdown user user-menu">
             <a href="#" className="dropdown-toggle" data-toggle="dropdown">
               <img src="/img/user2-160x160.jpg" className="user-image" alt="User Image"/>
-              <span className="hidden-xs">Alexander Pierce</span>
+              <span className="hidden-xs">Thao Nguyen</span>
             </a>
             <ul className="dropdown-menu">
 
@@ -30,7 +30,7 @@ export default class Header extends Component {
                 <img src="/img/user2-160x160.jpg" className="img-circle" alt="User Image"/>
 
                 <p>
-                  Alexander Pierce - Web Developer
+                  Thao Nguyen - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>

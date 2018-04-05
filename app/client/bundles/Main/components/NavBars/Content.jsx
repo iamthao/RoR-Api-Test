@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import DashboardView from '../Dashboard/DashboardView';
 import SanPhamView from '../HangHoa/SanPhamView';
+import MovieView from '../Movie/MovieView';
 
 const NotFound = () => <h2>404 Not Found React</h2>
 
@@ -16,7 +17,7 @@ export default class Content extends Component {
                     <Route exact path="/" component={DashboardView} />
                     <Route exact path="/hanghoa/danhmuc" component={SanPhamView} />
                     <Route exact path="/hanghoa/gia" component={DashboardView} />
-                    <Route exact path="/hanghoa/kiemkho" component={DashboardView} />
+                    <Route exact path="/hanghoa/kiemkho" component={MovieView} />
                     <Route component={NotFound} />
                 </Switch>
 
