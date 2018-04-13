@@ -15,9 +15,9 @@ export default class Content extends Component {
             <div className="content-wrapper">
                 <Switch>
                     <Route exact path="/" component={DashboardView} />
-                    <Route exact path="/hanghoa/danhmuc" component={SanPhamView} />
-                    <Route exact path="/hanghoa/gia" component={DashboardView} />
-                    <Route exact path="/hanghoa/kiemkho" component={MovieView} />
+                    <Route exact path="/home/hanghoa/danhmuc" component={SanPhamView} />
+                    <Route exact path="/home/hanghoa/gia" component={DashboardView} />
+                    <Route exact path="/home/hanghoa/kiemkho" component={MovieView} />
                     <Route component={NotFound} />
                 </Switch>
 

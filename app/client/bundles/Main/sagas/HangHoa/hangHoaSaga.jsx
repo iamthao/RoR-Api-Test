@@ -30,11 +30,23 @@ function* callGetListSP() {
 //Add new
 function* callAddNewSP(action) {
     try {
+        const state = yield select(getStateHangHoa);
+        var params = {
+            masp: action.masp,
+            tensp: action.tensp,
+            giaban: action.giaban,
+            giavon:  action.giavon,
+            tonkho: action.tonkho,
+            images : state.images,
+        }
+        const encodedParams = new Buffer(JSON.stringify(params)).toString('base64');
+        console.log('params',params)
+        console.log('encodedParams',encodedParams)
         const data = yield call(() => {
-            return fetch('/add_new_sp?masp='+ action.masp +'&tensp='+ action.tensp + '&giaban='+ action.giaban + '&giavon='+ action.giavon + '&tonkho='+ action.tonkho, fetchDataOption('POST'))
+            return fetch('/add_new_sp', fetchDataOption('POST', encodedParams))
                 .then(res => res.json())
         });
-        const state = yield select(getStateHangHoa);
+
         const data1 = yield call(() => {
             return fetch('/get_list_sp?current_page='+ state.current_page +"&take=" + state.take, fetchDataOption('GET'))
                 .then(res => res.json())

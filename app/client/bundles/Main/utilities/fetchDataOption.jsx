@@ -17,7 +17,7 @@ export const ReloadPage = () => {
 }
 
 
-export const fetchDataOption = (method) => {
+export const fetchDataOption = (method, data = null) => {
     if (getCSRFToken() != null) {
         return {
             method: method,
@@ -25,7 +25,8 @@ export const fetchDataOption = (method) => {
                 'X-CSRF-Token': getCSRFToken(),
                 'X-Requested-With': 'XMLHttpRequest',
             },
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            body: data
         }
     }
 

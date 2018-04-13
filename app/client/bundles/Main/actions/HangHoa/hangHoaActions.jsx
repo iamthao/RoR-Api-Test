@@ -38,9 +38,17 @@ export const setValueSPPaging = (page) => {
     page : page }
 };
 
-export default {
-  callGetListSP, initHangHoa, getListSPSuccess,
-  callAddNewSP,
-  callSPPaging, setValueSPPaging
+//Image
+export const setImageEmpty = () =>{
+  return { type: 'SET_IMAGE_EMPTY' }
+}
+export const setImageToList = (img_str) =>{
+  return { type: 'SET_IMAGE_TO_LIST',
+    img_str : img_str }
+}
+
+export const deleteImagefromList = (index) =>{
+  return { type: 'DELETE_IMAGE_FROM_LIST',
+    index : index }
 }
 

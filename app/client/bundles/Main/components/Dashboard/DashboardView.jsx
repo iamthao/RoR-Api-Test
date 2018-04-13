@@ -1,25 +1,77 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import languages from '../../utilities/constant';
+import recognition from '../../utilities/recognition';
+
+const code = {
+    'ja-JP': 'ja',
+    'vi-VN': 'vi',
+    'en-GB': 'en',
+    'en-US': 'en',
+}
 
 class Dashboard extends React.Component {
   static propTypes = {};
 
   constructor(props) {
     super(props);
-    this.state = {
-    };
+            this.state = {
+            selectedLanguage: 'vi-VN',
+            from: 'ja',
+            to: 'ja',
+            isRecording: false,
+            texts: [],
+            translated: []
+        }
+
+        this.startRecording = this.startRecording.bind(this);
+        this.updateCountry = this.updateCountry.bind(this);
+        this.onResult = this.onResult.bind(this);
   }
 
   componentDidMount() {
     //this.props.dispatch(fetchNewMovie(this.props.match.params.id));
   };
 
-  shouldComponentUpdate(nextProps) {
-    return this.props !== nextProps;
-  }
+  //shouldComponentUpdate(nextProps) {
+    //return this.props !== nextProps;
+  //}
+
+  startRecording() {
+        let isRecording = !this.state.isRecording;
+        this.setState({isRecording});
+
+        if (isRecording) {
+            recognition.startRecognize(this.state.selectedLanguage, this.onResult);
+        }
+        else{
+          recognition.stopRecognize()
+        }
+    }
+
+    onResult(text) {
+        let texts = this.state.texts;
+        let translated = this.state.translated;
+        texts.push(text);
+        this.setState({texts, isRecording: false}, () => {
+            //this.translateText(text);
+        });
+        $('#voice_result_1').val(text)
+    }
+
+    updateCountry(event) {
+        let selectedLanguage = event.target.value;
+        this.setState({
+            selectedLanguage,
+            from: code[selectedLanguage],
+            isRecording: false
+        }, () => {
+            recognition.stopRecognize();
+        });
+    }
 
   render() {
-
+    console.log('this.state.', this.state)
     return (
       <div>
         <section className="content-header">
@@ -30,7 +82,7 @@ class Dashboard extends React.Component {
           </ol>
         </section>
         <section className="content">
-          <div className="row">
+           <div className="row">
             <div className="col-md-3 col-sm-6 col-xs-12">
               <div className="info-box">
                 <span className="info-box-icon bg-aqua"><i className="ion ion-ios-gear-outline"></i></span>
@@ -133,6 +185,8 @@ class Dashboard extends React.Component {
               </div>
             </div>
           </div>
+
+
         </section>
       </div>
     );

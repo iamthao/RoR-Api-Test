@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   authenticated :user do
     root 'home#index'
   end
+  get "home/*path", to: 'home#index' #for React Router
 
   unauthenticated :user do
     devise_scope :user do

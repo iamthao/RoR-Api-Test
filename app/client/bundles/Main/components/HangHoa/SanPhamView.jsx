@@ -1,9 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Immutable from 'immutable';
 import {
     callGetListSP,
     callAddNewSP,
-    callSPPaging
+    callSPPaging,
+    setImageToList,
+    deleteImagefromList,
+    setImageEmpty
 } from '../../actions/HangHoa/hangHoaActions';
 import ReactPaginate from 'react-paginate';
 
@@ -16,8 +20,7 @@ class SanPham extends React.Component {
       col: 'mahh',
       asc: true,
       error_masp: false,
-      error_masp_msg :'',
-      image: ''
+      error_masp_msg :''
     };
     this.sortHandleClick = this.sortHandleClick.bind(this)
 
@@ -27,6 +30,7 @@ class SanPham extends React.Component {
 
     this.handlePageChange = this.handlePageChange.bind(this)
     this.onImageChange = this.onImageChange.bind(this)
+    this.deleteImage = this.deleteImage.bind(this)
   }
 
   componentDidMount() {
@@ -45,16 +49,17 @@ class SanPham extends React.Component {
   }
 
   openModalClick(){
+    this.props.dispatch(setImageEmpty())
     $('#masp').val('');
     $('#tensp').val('');
     $('#giaban').val('');
     $('#giavon').val('');
     $('#tonkho').val('');
+    $("#group_image").val('');
 
     this.setState({
       error_masp: false,
-      error_masp_msg :'',
-      image: ''
+      error_masp_msg :''
     });
 
     $('#addNewModal').modal('show');
@@ -86,20 +91,26 @@ class SanPham extends React.Component {
   }
 
   onImageChange(event){
-    console.log('vo 1',event.target.files )
-    if (event.target.files && event.target.files[0]) {
-        console.log('vo')
+    if(this.props.hangHoaReducer.images.size >= 5){
+        $("#group_image").val('');
+        alert('Allow 5 images')
+        return;
+    }
+    else if (event.target.files && event.target.files[0]) {
             let reader = new FileReader();
             reader.onload = (e) => {
-                console.log('e.target.result', e.target.result)
-                this.setState({image: e.target.result});
+              //this.setState({image: this.state.image.push(e.target.result)});
+              this.props.dispatch(setImageToList(e.target.result));
             };
             reader.readAsDataURL(event.target.files[0]);
-            //console.log('reader.readAsDataURL(event.target.files[0])', reader.readAsDataURL(event.target.files[0]))
-        }
+    }
   }
+
+  deleteImage(index){
+    this.props.dispatch(deleteImagefromList(index))
+  }
+
   render() {
-    console.log(this.state)
     let props = this.props.hangHoaReducer;
     let iconMahh = null;
     if (this.state.col == 'mahh' && this.state.asc == true) {
@@ -232,7 +243,14 @@ class SanPham extends React.Component {
                                     <input multiple type="file" onChange={(event) =>this.onImageChange(event)} className="filetype" id="group_image"/>
                                   </div>
                                   <div className="col-sm-12">
-                                    <img id="target" height='150px' src={this.state.image}/>
+                                    <div className="row" style={{padding: '0 15px'}}>
+                                       {props.images.map((value, index) =>
+                                        <div className="col-sm-4 img-wrap" key={index} style={{padding: '0'}}>
+                                          <button onClick={() =>this.deleteImage(index)} type="button" className="btn btn-sm delete-image">x</button>
+                                          <img width='100%' src={value} key={index} height="120px"/>
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -262,13 +280,16 @@ class SanPham extends React.Component {
                               <th onClick={() => this.sortHandleClick('tenhang')} className="sorting" tabIndex="0" aria-controls="example1" rowSpan="1" colSpan="1" aria-label="Browser: activate to sort column ascending" style={{ width: '40%' }}><b>Tên hàng </b>{iconTenhang}
                               </th>
                               <th onClick={() => this.sortHandleClick('giaban')} className="sorting" tabIndex="0" aria-controls="example1" rowSpan="1" colSpan="1" aria-label="Platform(s): activate to sort column ascending"
-                                style={{ width: '15%' }}><b>Giá bán </b> {iconGiaban}
+                                style={{ width: '10%' }}><b>Giá bán </b> {iconGiaban}
                               </th>
                               <th onClick={() => this.sortHandleClick('giavon')} className="sorting" tabIndex="0" aria-controls="example1" rowSpan="1" colSpan="1" aria-label="Engine version: activate to sort column ascending"
-                                style={{ width: '15%' }}><b>Giá vốn </b> {iconGiavon}
+                                style={{ width: '10%' }}><b>Giá vốn </b> {iconGiavon}
                               </th>
                               <th onClick={() => this.sortHandleClick('tonkho')} className="sorting" tabIndex="0" aria-controls="example1" rowSpan="1" colSpan="1" aria-label="CSS grade: activate to sort column ascending"
                                 style={{ width: '10%' }}><b>Tồn kho </b> {iconTonkho}
+                              </th>
+                              <th  className="sorting" tabIndex="0" aria-controls="example1" rowSpan="1" colSpan="1" aria-label="CSS grade: activate to sort column ascending"
+                                style={{ width: '10%' }}><b>Image </b> {iconTonkho}
                               </th>
                               <th className="sorting" tabIndex="0" aria-controls="example1" rowSpan="1" colSpan="1" aria-label="CSS grade: activate to sort column ascending"
                                 style={{ width: '5%' }}>
@@ -283,6 +304,7 @@ class SanPham extends React.Component {
                                 <td>{value.giaban}</td>
                                 <td>{value.giavon}</td>
                                 <td>{value.tonkho}</td>
+                                 <td> <img width='100%' src={value.image_1} height="50px"/></td>
                                 <td>Edit Delete</td>
                               </tr>
                             )}

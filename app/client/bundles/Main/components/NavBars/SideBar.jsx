@@ -21,15 +21,6 @@ export default class SideBar extends Component {
         return (
             <aside className="main-sidebar">
                 <section className="sidebar">
-                    <div className="user-panel">
-                        <div className="pull-left image">
-                            <img src="img/user2-160x160.jpg" className="img-circle" alt="User Image" />
-                        </div>
-                        <div className="pull-left info" id="test">
-                            <p>Thao Nguyen</p>
-                            <a href="#"><i className="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
                     <ul className="sidebar-menu" data-widget="tree">
                         <li className="header">MAIN NAVIGATION</li>
                         <li className={this.handleCheck(['/','']) ? 'active menu-open' : ''}>
@@ -37,7 +28,7 @@ export default class SideBar extends Component {
                                 <span>Dashboard</span>
                             </Link>
                         </li>
-                        <li className={this.handleCheck(['/hanghoa/danhmuc','/hanghoa/gia','/hanghoa/kiemkho']) ?
+                        <li className={this.handleCheck(['/home/hanghoa/danhmuc','/home/hanghoa/gia','/home/hanghoa/kiemkho']) ?
                         'treeview active menu-open' : 'treeview'}>
                             <a href="#">
                                 <i className="fa fa-pie-chart"></i>
@@ -47,14 +38,14 @@ export default class SideBar extends Component {
                                 </span>
                             </a>
                             <ul className="treeview-menu">
-                                <li className={window.location.pathname == '/hanghoa/danhmuc' ? 'active' : ''}>
-                                    <Link to='/hanghoa/danhmuc'><i className="fa fa-th"></i> Danh mục</Link>
+                                <li className={window.location.pathname == '/home/hanghoa/danhmuc' ? 'active' : ''}>
+                                    <Link to='/home/hanghoa/danhmuc'><i className="fa fa-th"></i> Danh mục</Link>
                                 </li>
-                                <li className={window.location.pathname == '/hanghoa/gia' ? 'active' : ''}>
-                                    <Link to='/hanghoa/gia'><i className="fa fa-tags"></i> Thiết lập giá</Link>
+                                <li className={window.location.pathname == '/home/hanghoa/gia' ? 'active' : ''}>
+                                    <Link to='/home/hanghoa/gia'><i className="fa fa-tags"></i> Thiết lập giá</Link>
                                 </li>
-                                <li className={window.location.pathname == '/hanghoa/kiemkho' ? 'active' : ''}>
-                                    <Link to='/hanghoa/kiemkho'><i className="fa fa-check-square-o"></i> Kiểm kho</Link>
+                                <li className={window.location.pathname == '/home/hanghoa/kiemkho' ? 'active' : ''}>
+                                    <Link to='/home/hanghoa/kiemkho'><i className="fa fa-check-square-o"></i> Kiểm kho</Link>
                                 </li>
                             </ul>
                         </li>

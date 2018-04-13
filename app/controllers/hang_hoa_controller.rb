@@ -19,18 +19,28 @@ class HangHoaController < ApplicationController
 
     @data.total_page = number_of_page(@total.to_i,@take.to_i)
 
-    @data.data = @query.order("id ASC").limit(@take).offset(@skip).select("id, masp, tensp, giaban, giavon, tonkho")
+    @data.data = @query.order("id ASC").limit(@take).offset(@skip).select("id, masp, tensp, giaban, giavon, tonkho, image_1")
 
     render :json => @data
   end
 
   def add_new_sp
+    dataEncode = request.body
+    dataDecode = Base64.decode64(dataEncode.read)
+    data = JSON.parse dataDecode
+
     @sp = SanPham.new
-    @sp.masp = params[:masp]
-    @sp.tensp = params[:tensp]
-    @sp.giaban = params[:giaban]
-    @sp.giavon = params[:giavon]
-    @sp.tonkho = params[:tonkho]
+    @sp.masp = data['masp']
+    @sp.tensp = data['tensp']
+    @sp.giaban = data['giaban']
+    @sp.giavon = data['giavon']
+    @sp.tonkho = data['tonkho']
+    @sp.image_1 = data['images'][0]
+    @sp.image_2 = data['images'][1]
+    @sp.image_3 = data['images'][2]
+    @sp.image_4 = data['images'][3]
+    @sp.image_5 = data['images'][4]
+
     @sp.user_id = user_id
     @sp.save
 
